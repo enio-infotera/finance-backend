@@ -12,7 +12,7 @@ export default class AddCategoryToTransactions1588463532618
       'transactions',
       new TableColumn({
         name: 'category_id',
-        type: 'varchar',
+        type: 'uuid',
         isNullable: true,
       }),
     );
@@ -20,22 +20,18 @@ export default class AddCategoryToTransactions1588463532618
     await queryRunner.createForeignKey(
       'transactions',
       new TableForeignKey({
-        name: 'fk_transactions_categories_category_id',
         columnNames: ['category_id'],
         referencedColumnNames: ['id'],
         referencedTableName: 'categories',
-        onDelete: 'SET NULL',
+        name: 'TransactionCategory',
         onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
       }),
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey(
-      'transactions',
-      'fk_transactions_categories_categories_id',
-    );
-
+    await queryRunner.dropForeignKey('transactions', 'TransactionCategory');
     await queryRunner.dropColumn('transactions', 'category_id');
   }
 }

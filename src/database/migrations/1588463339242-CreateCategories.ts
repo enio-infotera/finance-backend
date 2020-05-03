@@ -9,9 +9,10 @@ export default class CreateCategories1588463339242
         columns: [
           {
             name: 'id',
-            type: 'varchar',
+            type: 'uuid',
             isPrimary: true,
             generationStrategy: 'uuid',
+            default: 'uuid_generate_v4()',
           },
           {
             name: 'title',
@@ -33,6 +34,6 @@ export default class CreateCategories1588463339242
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    queryRunner.dropTable('categories');
+    await queryRunner.dropTable('categories');
   }
 }
